@@ -32,7 +32,10 @@ public:
     rclcpp::QoS sensor_qos_profile(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_sensor_data));
     // override the default sensor data qos
     sensor_qos_profile.durability(rclcpp::DurabilityPolicy::TransientLocal);
-    publisher_ = this->create_publisher<std_msgs::msg::String>("topic", custom_qos_profile);
+    //
+    rclcpp::PublisherOptions options;
+    options.qos_overriding_options = rclcpp::QosOverridingOptions::with_default_policies();
+    publisher_ = this->create_publisher<std_msgs::msg::String>("topic", custom_qos_profile, options);
     timer_ = this->create_wall_timer(
         500ms, std::bind(&CustomQosPublisher::timer_callback, this));
   }

@@ -19,9 +19,13 @@ ament_target_dependencies(custom_qos_publisher rclcpp std_msgs)
 add_executable(custom_qos_subscriber src/custom_qos_subscriber.cpp)
 ament_target_dependencies(custom_qos_subscriber rclcpp std_msgs)
 
+add_executable(dynamic_qos_subscriber src/dynamic_qos_subscriber.cpp)
+ament_target_dependencies(dynamic_qos_subscriber rclcpp std_msgs)
+
 install(TARGETS
   custom_qos_publisher
   custom_qos_subscriber
+  dynamic_qos_subscriber
   DESTINATION lib/${PROJECT_NAME}
 )
 
