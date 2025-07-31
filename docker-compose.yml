@@ -1,0 +1,17 @@
+services:
+  container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+    #  RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      ROS_AUTOMATIC_DISCOVERY_RANGE: "LOCALHOST"
+    command: /bin/bash
+    volumes:
+      - ./:/home/container/
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 1048576
+    restart: no
+    tty: true
