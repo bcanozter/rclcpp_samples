@@ -34,25 +34,31 @@ private:
             {
                 RCLCPP_ERROR(rclcpp::get_logger("qos_check"), "Incompatible QoS policies detected: %s",
                              compatibility_result.reason.c_str());
+                subscription_qos_profile.reliability(rmw_qos_profile.reliability);
+                subscription_qos_profile.liveliness(rmw_qos_profile.liveliness);
                 reset_subscription();
             }
-            else if (compatibility_result.compatibility == rclcpp::QoSCompatibility::Warning)
+            // else if (compatibility_result.compatibility == rclcpp::QoSCompatibility::Warning)
+            // {
+            //     RCLCPP_WARN(rclcpp::get_logger("qos_check"), "QoS compatibility warning: %s",
+            //                 compatibility_result.reason.c_str());
+            //     subscription_qos_profile.reliability(rmw_qos_profile.reliability);
+            //     subscription_qos_profile.liveliness(rmw_qos_profile.liveliness);
+            //     reset_subscription();
+            // }
+            // else
+            // {
+            //     RCLCPP_INFO(rclcpp::get_logger("qos_check"), "QoS compatibility OK");
+            // }
+            if (!subscription_)
             {
-                RCLCPP_WARN(rclcpp::get_logger("qos_check"), "QoS compatibility warning: %s",
-                            compatibility_result.reason.c_str());
-                reset_subscription();
+                _create_subscription();
             }
             // RCLCPP_DEBUG(this->get_logger(),
             //             "QoS Profile - history: %d, depth: %zu, reliability: %d, durability: %d, deadline: %ld ns, lifespan: %ld ns, liveliness: %d, liveliness_lease_duration: %ld ns",
             //             qos_profile.history, qos_profile.depth, qos_profile.reliability, qos_profile.durability,
             //             qos_profile.deadline.nsec, qos_profile.lifespan.nsec,
             //             qos_profile.liveliness, qos_profile.liveliness_lease_duration.nsec);
-            subscription_qos_profile.reliability(rmw_qos_profile.reliability);
-            subscription_qos_profile.liveliness(rmw_qos_profile.liveliness);
-            if (!subscription_)
-            {
-                _create_subscription();
-            }
         }
     }
 
