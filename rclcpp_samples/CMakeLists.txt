@@ -9,6 +9,8 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
+find_package(lifecycle_msgs REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -22,10 +24,14 @@ ament_target_dependencies(custom_qos_subscriber rclcpp std_msgs)
 add_executable(dynamic_qos_subscriber src/dynamic_qos_subscriber.cpp)
 ament_target_dependencies(dynamic_qos_subscriber rclcpp std_msgs)
 
+add_executable(lifecycle_example src/lifecycle_example.cpp)
+ament_target_dependencies(lifecycle_example rclcpp std_msgs lifecycle_msgs rclcpp_lifecycle)
+
 install(TARGETS
   custom_qos_publisher
   custom_qos_subscriber
   dynamic_qos_subscriber
+  lifecycle_example
   DESTINATION lib/${PROJECT_NAME}
 )
 
